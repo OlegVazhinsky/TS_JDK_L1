@@ -99,6 +99,7 @@ public class ClientWindow extends JFrame{
         gbc.gridy = 5;
         gbc.gridwidth = 2;
         panel.add(sendWindow, gbc);
+        gbc.gridwidth = 1;
         gbc.gridx = 2;
         gbc.gridy = 5;
         panel.add(sendButton, gbc);
