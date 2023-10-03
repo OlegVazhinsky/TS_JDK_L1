@@ -2,6 +2,10 @@ package server.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ServerWindow extends JFrame{
     private static final int WIDTH = 600;
@@ -9,16 +13,24 @@ public class ServerWindow extends JFrame{
 
     JButton startButton, stopButton;
 
-    JTextField textLog;
+    JTextArea textLog;
+
+    private static boolean serverStatus;
 
     ServerWindow(){
+
+        serverStatus = false;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy,HH:mm:ss");
+        Date date = new Date();
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setTitle("Chat server");
         setResizable(false);
 
-        textLog = new JTextField();
+        textLog = new JTextArea(3,3);
         textLog.setPreferredSize(new Dimension(500, 600));
 
         startButton = new JButton("Start");
@@ -50,6 +62,19 @@ public class ServerWindow extends JFrame{
         add(panel);
 
         setVisible(true);
+
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!serverStatus) {
+                    textLog.append(dateFormat.format(date) + " - Server is already stopped.\n");
+                }
+                else {
+                    textLog.append(dateFormat.format(date) + " - Server stopped.\n");
+                    // drop all clients
+                }
+            }
+        });
 
     }
 
